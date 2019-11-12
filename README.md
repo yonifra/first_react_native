@@ -1,1 +1,1 @@
-first_react_native
+Fiddling with React Native for fun. Just for self-educational purposes
