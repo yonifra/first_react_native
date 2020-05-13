@@ -18,7 +18,9 @@
     "react-navigation": "^2.18.2"
   },
   "devDependencies": {
+    "@react-native-community/eslint-config": "^1.1.0",
     "babel-preset-expo": "^5.0.0",
+    "eslint": "^7.0.0",
     "jest-expo": "^31.0.0"
   },
   "private": true
