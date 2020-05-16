@@ -5,6 +5,53 @@ import CardsDeck from './components/CardsDeck';
 import React from 'react';
 
 class App extends React.Component {
+  state = {
+    cards: [],
+    //   {
+    //     code: '9H',
+    //     image: 'https://deckofcardsapi.com/static/img/9H.png',
+    //     images: {
+    //       png: 'https://deckofcardsapi.com/static/img/9H.png',
+    //       svg: 'https://deckofcardsapi.com/static/img/9H.svg',
+    //     },
+    //     suit: 'HEARTS',
+    //     value: '9',
+    //   },
+    //   {
+    //     code: '4S',
+    //     image: 'https://deckofcardsapi.com/static/img/5S.png',
+    //     images: {
+    //       png: 'https://deckofcardsapi.com/static/img/4S.png',
+    //       svg: 'https://deckofcardsapi.com/static/img/4S.svg',
+    //     },
+    //     suit: 'SPADES',
+    //     value: '4',
+    //   },
+    // ],
+  };
+
+  getDeck = async () => {
+    const newDeck = await fetch(
+      'https://deckofcardsapi.com/api/deck/new/draw/?count=2',
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        return json;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    return newDeck.cards;
+  };
+
+  componentDidMount = async () => {
+    const cards = await this.getDeck();
+    this.setState({
+      cards,
+    });
+  };
+
   render() {
     return (
       <SafeAreaView>
@@ -16,7 +63,7 @@ class App extends React.Component {
           <ColorBox colorName="Red" colorHex="#c62828" />
           <ColorBox colorName="Blue" colorHex="#2979ff" />
           <ColorBox colorName="Yellow" colorHex="#fff176" />
-          <CardsDeck />
+          <CardsDeck cards={this.state.cards} />
         </View>
       </SafeAreaView>
     );
