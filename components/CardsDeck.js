@@ -20,8 +20,9 @@ const CardsDeck = (props) => {
 
 const styles = StyleSheet.create({
   cardImage: {
-    width: 145,
+    width: 146,
     height: 205,
+    margin: 3,
   },
 });
 

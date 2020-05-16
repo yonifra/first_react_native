@@ -1,38 +1,18 @@
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import ColorBox from './components/ColorBox';
 import CardsDeck from './components/CardsDeck';
+import RefreshButton from './components/RefreshButton';
 
 import React from 'react';
 
 class App extends React.Component {
   state = {
     cards: [],
-    //   {
-    //     code: '9H',
-    //     image: 'https://deckofcardsapi.com/static/img/9H.png',
-    //     images: {
-    //       png: 'https://deckofcardsapi.com/static/img/9H.png',
-    //       svg: 'https://deckofcardsapi.com/static/img/9H.svg',
-    //     },
-    //     suit: 'HEARTS',
-    //     value: '9',
-    //   },
-    //   {
-    //     code: '4S',
-    //     image: 'https://deckofcardsapi.com/static/img/5S.png',
-    //     images: {
-    //       png: 'https://deckofcardsapi.com/static/img/4S.png',
-    //       svg: 'https://deckofcardsapi.com/static/img/4S.svg',
-    //     },
-    //     suit: 'SPADES',
-    //     value: '4',
-    //   },
-    // ],
+    numOfCards: 2,
   };
 
-  getDeck = async () => {
+  getDeck = async (numOfCards) => {
     const newDeck = await fetch(
-      'https://deckofcardsapi.com/api/deck/new/draw/?count=2',
+      'https://deckofcardsapi.com/api/deck/new/draw/?count=' + numOfCards,
     )
       .then((response) => response.json())
       .then((json) => {
@@ -46,7 +26,7 @@ class App extends React.Component {
   };
 
   componentDidMount = async () => {
-    const cards = await this.getDeck();
+    const cards = await this.getDeck(this.state.numOfCards);
     this.setState({
       cards,
     });
@@ -59,11 +39,8 @@ class App extends React.Component {
           <Text style={styles.text}>
             Here are some boxes of different colors
           </Text>
-          <ColorBox colorName="Cyan" colorHex="#2aa198" />
-          <ColorBox colorName="Red" colorHex="#c62828" />
-          <ColorBox colorName="Blue" colorHex="#2979ff" />
-          <ColorBox colorName="Yellow" colorHex="#fff176" />
           <CardsDeck cards={this.state.cards} />
+          <RefreshButton numOfCards={this.state.numOfCards} />
         </View>
       </SafeAreaView>
     );
