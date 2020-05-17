@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Button } from 'react-native';
 import CardsDeck from './components/CardsDeck';
 import RefreshButton from './components/RefreshButton';
 
@@ -11,8 +11,9 @@ class App extends React.Component {
   };
 
   getDeck = async (numOfCards) => {
+    console.log('fetching cards from server...');
     const newDeck = await fetch(
-      'https://deckofcardsapi.com/api/deck/new/draw/?count=' + numOfCards,
+      `https://deckofcardsapi.com/api/deck/new/draw/?count=${numOfCards}&jokers_enabled=true`,
     )
       .then((response) => response.json())
       .then((json) => {
@@ -32,6 +33,14 @@ class App extends React.Component {
     });
   };
 
+  handleOnClick = async () => {
+    console.log('onClick() called...');
+    const cards = await this.getDeck(this.state.numOfCards);
+    this.setState({
+      cards,
+    });
+  };
+
   render() {
     return (
       <SafeAreaView>
@@ -40,7 +49,7 @@ class App extends React.Component {
             Here are some boxes of different colors
           </Text>
           <CardsDeck cards={this.state.cards} />
-          <RefreshButton numOfCards={this.state.numOfCards} />
+          <Button title="Fetch cards" onPress={this.handleOnClick} />
         </View>
       </SafeAreaView>
     );
